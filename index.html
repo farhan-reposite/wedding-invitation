@@ -190,28 +190,32 @@
       }
       .enter-loader.hidden { opacity: 0; }
 
-      /* Gate frame (background) — same resolution, centered */
-      .gate-bg {
+      /* Gate — all elements use identical img sizing for perfect alignment */
+      .gate-img {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%);
         width: 100vw;
         height: 100vh;
-        background: url("gate-frame.png") center center / contain no-repeat;
-        z-index: 5;
+        object-fit: contain;
+        object-position: center center;
         pointer-events: none;
+      }
+
+      /* Gate frame */
+      .gate-bg {
+        z-index: 5;
         transition:
           opacity 0.8s ease 2.2s,
           transform 3s ease 0.8s;
       }
-
       #gate-screen.open .gate-bg {
         opacity: 0;
         transform: translate(-50%, -50%) scale(1.4);
       }
 
-      /* The two gate doors — same resolution image, clipped to half */
+      /* The two gate door wrappers — clip to their half */
       .gate-left,
       .gate-right {
         position: absolute;
@@ -224,47 +228,24 @@
           transform 2.2s cubic-bezier(0.77, 0, 0.175, 1),
           opacity 0.5s ease 1.6s;
       }
+      .gate-left  { left: 0;  transform-origin: left center; }
+      .gate-right { right: 0; transform-origin: right center; }
 
-      .gate-left {
-        left: 0;
-        transform-origin: left center;
-      }
-      .gate-right {
-        right: 0;
-        transform-origin: right center;
-      }
+      #gate-screen.open .gate-left  { transform: translateX(-100%) scale(1.15); opacity: 0; }
+      #gate-screen.open .gate-right { transform: translateX(100%)  scale(1.15); opacity: 0; }
 
-      #gate-screen.open .gate-left {
-        transform: translateX(-100%) scale(1.15);
-        opacity: 0;
-      }
-      #gate-screen.open .gate-right {
-        transform: translateX(100%) scale(1.15);
-        opacity: 0;
-      }
-
-      /* Each door image is full-viewport-sized, positioned so only its half shows */
-      .gate-door {
+      /* Door images — full viewport size, same as gate-bg, clipped by parent overflow:hidden */
+      .gate-door-img {
         position: absolute;
-        top: 0;
-        width: 100vw;
+        top: 50%;
         height: 100vh;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
+        width: 100vw;
+        object-fit: contain;
+        object-position: center center;
+        pointer-events: none;
       }
-
-      .gate-left .gate-door {
-        left: 0;
-        background-image: url("left-gate.png");
-      }
-
-      .gate-right .gate-door {
-        right: 0;
-        left: -100%;
-        background-image: url("right-gate.png");
-        background-position: center center;
-      }
+      .gate-left  .gate-door-img { left: 0;     transform: translateY(-50%); }
+      .gate-right .gate-door-img { left: -100%; transform: translateY(-50%); }
 
       /* Center text on gate */
       .gate-center-content {
@@ -2409,16 +2390,16 @@
 
     <!-- ═══ GATE SCREEN ═══ -->
     <div id="gate-screen">
-      <div class="gate-bg"></div>
+      <img class="gate-img gate-bg" src="gate-frame.png" alt="" />
 
       <!-- Left door -->
       <div class="gate-left">
-        <div class="gate-door"></div>
+        <img class="gate-door-img" src="left-gate.png" alt="" />
       </div>
 
       <!-- Right door -->
       <div class="gate-right">
-        <div class="gate-door"></div>
+        <img class="gate-door-img" src="right-gate.png" alt="" />
       </div>
     </div>
 
@@ -3154,7 +3135,7 @@
       // Preload all images, enable button when done
       (function preloadImages() {
         const images = [
-          "gate-frame.png","gate.png","landscape.png",
+          "gate-frame.png","left-gate.png","right-gate.png","landscape.png",
           "leaf-left.png","leaf-right.png",
           "small-leaf-left.png","small-leaf-right.png",
           "left-bottom-leaf-top.png","left-bottom-leaf-bottom.png",
