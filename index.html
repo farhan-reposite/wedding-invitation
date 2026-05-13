@@ -232,7 +232,7 @@
       #gate-screen.open .gate-left  { transform: translateX(-100%) scale(1.15); opacity: 0; }
       #gate-screen.open .gate-right { transform: translateX(100%)  scale(1.15); opacity: 0; }
 
-      /* Door images — same height as frame, clipped by parent overflow:hidden */
+      /* Door images — centered on full screen, clipped by parent overflow:hidden */
       .gate-door-img {
         position: absolute;
         top: 50%;
@@ -240,8 +240,10 @@
         width: auto;
         pointer-events: none;
       }
-      .gate-left  .gate-door-img { left: 0;     transform: translateY(-50%); }
-      .gate-right .gate-door-img { left: -100%; transform: translateY(-50%); }
+      /* left: 100% puts left edge at container right edge (=screen center), then -50% shifts to screen center */
+      .gate-left  .gate-door-img { left: 100%; transform: translate(-50%, -50%); }
+      /* left: 0 puts left edge at container left edge (=screen center), then -50% shifts to screen center */
+      .gate-right .gate-door-img { left: 0;    transform: translate(-50%, -50%); }
 
       /* Center text on gate */
       .gate-center-content {
