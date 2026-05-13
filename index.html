@@ -166,7 +166,29 @@
         padding: 12px 28px;
         cursor: pointer;
         animation: pulse 2.2s ease-in-out infinite;
+        transition: opacity 0.4s ease;
       }
+      .enter-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+        animation: none;
+      }
+      .enter-loader {
+        width: 120px;
+        height: 2px;
+        background: rgba(196,164,74,0.15);
+        border-radius: 2px;
+        margin-top: 16px;
+        overflow: hidden;
+      }
+      .enter-loader-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--gold-light), var(--gold));
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+      .enter-loader.hidden { opacity: 0; }
 
       /* Gate frame (background) — same resolution, centered */
       .gate-bg {
@@ -2379,7 +2401,10 @@
     <!-- Enter screen -->
     <div id="enter-screen">
       <div class="enter-names">Farhan & Erina</div>
-      <button class="enter-btn" onclick="enterSite()">Open Invitation</button>
+      <button class="enter-btn" id="enter-btn" onclick="enterSite()" disabled>Open Invitation</button>
+      <div class="enter-loader" id="enter-loader">
+        <div class="enter-loader-bar" id="enter-loader-bar"></div>
+      </div>
     </div>
 
     <!-- ═══ GATE SCREEN ═══ -->
@@ -3125,6 +3150,36 @@
         setTimeout(openGate, 1600);
         setTimeout(revealLandscape, 3200);
       }
+
+      // Preload all images, enable button when done
+      (function preloadImages() {
+        const images = [
+          "gate-frame.png","gate.png","landscape.png",
+          "leaf-left.png","leaf-right.png",
+          "small-leaf-left.png","small-leaf-right.png",
+          "left-bottom-leaf-top.png","left-bottom-leaf-bottom.png",
+          "right-bottom-leaf-top.png","right-bottom-leaf-bottom.png",
+          "middle-bottom-leaf.png","butterfly.gif","wax-seal.png"
+        ];
+        const btn = document.getElementById("enter-btn");
+        const bar = document.getElementById("enter-loader-bar");
+        const loader = document.getElementById("enter-loader");
+        let loaded = 0;
+        const total = images.length;
+
+        images.forEach(src => {
+          const img = new Image();
+          img.onload = img.onerror = () => {
+            loaded++;
+            bar.style.width = (loaded / total * 100) + "%";
+            if (loaded === total) {
+              btn.disabled = false;
+              loader.classList.add("hidden");
+            }
+          };
+          img.src = src;
+        });
+      })();
     </script>
   </body>
 </html>
