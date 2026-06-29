@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     />
     <title>Farhan & Erina – Our Story</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Great+Vibes&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
 
@@ -48,13 +48,22 @@
       /* ═══════════════════════════════
          AR-RUM SECTION
       ═══════════════════════════════ */
-      .section-arrum {
+      .story-section.section-arrum {
+        min-height: 100svh;
+        width: 100%;
         text-align: center;
-        padding: 48px 20px;
+        margin: 0 auto;
+        padding: 48px 28px;
         border-bottom: none;
+        background: var(--beige);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .arrum-frame {
         position: relative;
+        width: 100%;
+        max-width: 520px;
         padding: 48px 32px 40px;
         background: linear-gradient(160deg, #faf7f0, #f2ead8);
         box-shadow:
@@ -81,7 +90,7 @@
       .arrum-frame-bl       { bottom: 6px; left: 6px;   transform: scaleY(-1); }
       .arrum-frame-br       { bottom: 6px; right: 6px;  transform: scale(-1); }
       .arrum-arabic {
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Amiri", "Cormorant Garamond", serif;
         font-size: clamp(18px, 5.5vw, 26px);
         line-height: 2.2;
         color: var(--text);
@@ -674,6 +683,7 @@
         inset: 0;
         background: url("landscape.png") center center / cover no-repeat;
         overflow: hidden;
+        z-index: 0;
       }
 
       .landscape-bg::before {
@@ -684,17 +694,24 @@
         display: none;
       }
 
-      /* Bottom fade — blends entire landscape section into story content */
+      /* Fades blend the landscape section into the surrounding story content */
+      .landscape-hero::before,
       .landscape-hero::after {
         content: "";
         position: absolute;
-        bottom: 0;
         left: 0;
         right: 0;
         height: 60px;
-        background: linear-gradient(to bottom, transparent, var(--beige));
         pointer-events: none;
         z-index: 20;
+      }
+      .landscape-hero::before {
+        top: 0;
+        background: linear-gradient(to bottom, var(--beige), transparent);
+      }
+      .landscape-hero::after {
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent, var(--beige));
       }
 
       .landscape-text {
@@ -1007,6 +1024,134 @@
       .section-dress > * {
         position: relative;
         z-index: 2;
+      }
+
+      /* ── Prewedding photo frame ── */
+      .section-prewed {
+        border-bottom: none;
+        padding: 0;
+        margin: 72px -8px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: visible;
+        opacity: 0;
+        transform: translateY(36px);
+        transition: opacity 0.9s ease, transform 0.9s ease;
+      }
+      .section-prewed.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .prewed-frame-outer {
+        position: relative;
+        width: clamp(200px, 80vw, 300px);
+      }
+      /* Elegant multi-layer border frame */
+      .prewed-frame-inner {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        background: linear-gradient(160deg, #f5edd8, #e6dabd);
+        box-shadow:
+          0 0 0 1px rgba(196,164,74,0.7),
+          0 0 0 5px rgba(250,247,242,1),
+          0 0 0 6px rgba(196,164,74,0.35),
+          0 0 0 10px rgba(250,247,242,1),
+          0 0 0 11px rgba(196,164,74,0.18),
+          0 18px 48px rgba(60,40,10,0.22),
+          0 6px 16px rgba(60,40,10,0.12);
+        overflow: hidden;
+      }
+      .prewed-frame-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      /* Placeholder shown when no photo */
+      .prewed-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: rgba(139,105,20,0.35);
+      }
+      .prewed-placeholder svg {
+        width: 48px;
+        height: 48px;
+        opacity: 0.4;
+      }
+      .prewed-placeholder span {
+        font-family: "Cinzel", serif;
+        font-size: 8px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+      /* SVG corner ornaments */
+      .prewed-corner {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .prewed-corner-tl { top: -2px;    left: -2px; }
+      .prewed-corner-tr { top: -2px;    right: -2px;  transform: scaleX(-1); }
+      .prewed-corner-bl { bottom: -2px; left: -2px;   transform: scaleY(-1); }
+      .prewed-corner-br { bottom: -2px; right: -2px;  transform: scale(-1); }
+      .prewed-caption {
+        margin-top: 16px;
+        text-align: center;
+      }
+      .prewed-caption-label {
+        font-family: "Cinzel", serif;
+        font-size: 7.5px;
+        letter-spacing: 0.45em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 4px;
+      }
+      .prewed-caption-names {
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(22px, 6vw, 28px);
+        color: var(--text);
+        line-height: 1.1;
+      }
+      .prewed-story {
+        width: 100%;
+        padding: 48px 20px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .prewed-story-chapter {
+        padding: 0 4px;
+      }
+      .prewed-story-chapter .story-heading {
+        margin-bottom: 12px;
+      }
+      .prewed-story-divider {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 32px 0;
+        opacity: 0.5;
+      }
+      .prewed-story-divider span:first-child,
+      .prewed-story-divider span:last-child {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+      }
+      .prewed-story-mark {
+        color: var(--gold);
+        font-size: 14px;
+        flex: 0 0 auto;
       }
 
       /* ── Chapter I — sage tint with padi sprig ── */
@@ -2323,7 +2468,7 @@
 
       /* ── Falling leaves ── */
       #leaves-container {
-        position: fixed;
+        position: absolute;
         inset: 0;
         pointer-events: none;
         z-index: 5;
@@ -2403,13 +2548,28 @@
 
     <!-- ═══ STORY SCREEN ═══ -->
     <div id="story-screen">
-      <!-- Leaf decorations — absolute so they stay put when scrolling -->
       <div id="progress-bar"></div>
-      <div id="leaves-container"></div>
       <div class="backdrop" id="backdrop"></div>
+
+      <!-- Ar-Rum verse -->
+      <section class="story-section section-arrum">
+        <div class="arrum-frame">
+          <span class="arrum-frame-bl"></span>
+          <span class="arrum-frame-br"></span>
+          <div class="arrum-arabic" lang="ar">
+            وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+          </div>
+          <div class="arrum-divider"></div>
+          <p class="arrum-translation">
+            "And among His signs is that He created for you spouses from among yourselves so that you may find tranquility in them, and He placed between you affection and mercy. Surely in this are signs for people who reflect."
+          </p>
+          <div class="arrum-source">QS. Ar-Rum : 21</div>
+        </div>
+      </section>
 
       <!-- Landscape hero -->
       <section class="landscape-hero">
+        <div id="leaves-container"></div>
         <img
           class="gate-leaf gate-leaf-bottom-left"
           src="left-bottom-leaf-bottom.png"
@@ -2522,70 +2682,73 @@
 
       <!-- Story chapters -->
       <div class="story-content">
-        <!-- Ar-Rum verse -->
-        <section class="story-section section-arrum">
-          <div class="arrum-frame">
-            <span class="arrum-frame-bl"></span>
-            <span class="arrum-frame-br"></span>
-            <div class="arrum-arabic">
-              وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+        <!-- Prewedding photo frame + combined story -->
+        <div class="section-prewed story-section">
+          <div class="prewed-frame-outer">
+            <!-- Corner ornaments -->
+            <svg class="prewed-corner prewed-corner-tl" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 2 L18 2 M2 2 L2 18" stroke="#c4a44a" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M2 2 Q13 2 13 13" stroke="#c4a44a" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+              <circle cx="13" cy="13" r="2.2" fill="#c4a44a" opacity="0.7"/>
+              <circle cx="2" cy="2" r="1.4" fill="#c4a44a" opacity="0.9"/>
+              <path d="M7 2 Q7 7 2 7" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+              <path d="M2 10 Q7 10 7 15" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+            </svg>
+            <svg class="prewed-corner prewed-corner-tr" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 2 L18 2 M2 2 L2 18" stroke="#c4a44a" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M2 2 Q13 2 13 13" stroke="#c4a44a" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+              <circle cx="13" cy="13" r="2.2" fill="#c4a44a" opacity="0.7"/>
+              <circle cx="2" cy="2" r="1.4" fill="#c4a44a" opacity="0.9"/>
+              <path d="M7 2 Q7 7 2 7" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+              <path d="M2 10 Q7 10 7 15" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+            </svg>
+            <svg class="prewed-corner prewed-corner-bl" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 2 L18 2 M2 2 L2 18" stroke="#c4a44a" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M2 2 Q13 2 13 13" stroke="#c4a44a" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+              <circle cx="13" cy="13" r="2.2" fill="#c4a44a" opacity="0.7"/>
+              <circle cx="2" cy="2" r="1.4" fill="#c4a44a" opacity="0.9"/>
+              <path d="M7 2 Q7 7 2 7" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+              <path d="M2 10 Q7 10 7 15" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+            </svg>
+            <svg class="prewed-corner prewed-corner-br" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 2 L18 2 M2 2 L2 18" stroke="#c4a44a" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M2 2 Q13 2 13 13" stroke="#c4a44a" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+              <circle cx="13" cy="13" r="2.2" fill="#c4a44a" opacity="0.7"/>
+              <circle cx="2" cy="2" r="1.4" fill="#c4a44a" opacity="0.9"/>
+              <path d="M7 2 Q7 7 2 7" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+              <path d="M2 10 Q7 10 7 15" stroke="#c4a44a" stroke-width="0.7" fill="none" opacity="0.5"/>
+            </svg>
+            <div class="prewed-frame-inner">
+              <!-- Replace src with your prewedding photo filename -->
+              <img src="prewed.jpg" alt="Prewedding photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="prewed-placeholder" style="display:none">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>Prewedding Photo</span>
+              </div>
             </div>
-            <div class="arrum-divider"></div>
-            <p class="arrum-translation">
-              "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."
-            </p>
-            <div class="arrum-source">QS. Ar-Rum : 21</div>
           </div>
-        </section>
 
-        <!-- Chapter I — asymmetric with large numeral -->
-        <section class="story-section section-ch1">
-          <div class="ch1-header">
-            <div class="ch1-numeral">I</div>
-            <div class="ch1-meta">
-              <div class="chapter-label chapter-label-plain">Chapter One</div>
-              <div class="story-heading">Dimulai dari KKN</div>
+          <!-- Combined Chapter I & II below the photo -->
+          <div class="prewed-story">
+            <div class="prewed-story-chapter">
+              <div class="chapter-label chapter-label-center">Chapter One</div>
+              <div class="story-heading" style="text-align:center">Dimulai dari KKN</div>
+              <p class="story-body" style="text-align:center">
+                Musim KKN membawa mereka ke desa yang sama. Farhan datang dengan tugasnya sendiri, Erina pun begitu — tidak ada yang merencanakan pertemuan itu. Obrolan kecil di beranda posko yang berlangsung jauh melewati waktu makan malam. Di sanalah sesuatu mulai tumbuh.
+              </p>
+            </div>
+            <div class="prewed-story-divider">
+              <span></span><span class="prewed-story-mark">✦</span><span></span>
+            </div>
+            <div class="prewed-story-chapter">
+              <div class="chapter-label chapter-label-center">Chapter Two</div>
+              <div class="story-heading" style="text-align:center">Dan Kini — Selamanya</div>
+              <p class="story-body" style="text-align:center">
+                KKN berakhir, tapi apa yang tumbuh di sana tidak ikut pergi. Pada 8 Juli 2026, Farhan dan Erina akan menjawab semua awal yang pernah terjadi di desa itu — dan mereka ingin kamu ada di sana bersama mereka.
+              </p>
             </div>
           </div>
-          <p class="story-body">
-            Musim KKN membawa mereka ke desa yang sama — tanah merah, langit
-            luas, dan jadwal yang penuh tapi terasa longgar kalau dijalani
-            berdua. Farhan datang dengan tugasnya sendiri. Erina pun begitu.
-            Tidak ada yang merencanakan pertemuan itu.
-          </p>
-          <p class="story-body">
-            Bermula dari rapat koordinasi yang panjang, lalu perjalanan survei
-            ke sawah di ujung desa, lalu tanpa terasa — obrolan kecil di beranda
-            posko yang berlangsung jauh melewati waktu makan malam. Di sanalah
-            sesuatu mulai tumbuh, diam-diam, seperti padi di musim yang tepat.
-          </p>
-          <div class="ch1-end">
-            <span class="ch1-end-line"></span>
-            <span class="ch1-end-mark">✦</span>
-            <span class="ch1-end-line"></span>
-          </div>
-        </section>
-
-        <!-- Chapter II — centered quote with drop cap -->
-        <section class="story-section section-ch2">
-          <div class="ch2-quote-mark">&ldquo;</div>
-          <div class="chapter-label chapter-label-center">Chapter Two</div>
-          <div class="story-heading">Dan Kini — Selamanya</div>
-          <p class="story-body ch2-body">
-            <span class="dropcap">K</span>KN berakhir. Desa itu ditinggalkan,
-            tapi apa yang tumbuh di sana tidak ikut pergi. Hari-hari setelahnya
-            terisi dengan cara yang berbeda — pesan yang datang di malam hari,
-            tawa yang meledak dari hal-hal kecil, dan ketenangan yang hanya bisa
-            datang dari seseorang yang benar-benar dikenal.
-          </p>
-          <p class="story-body ch2-body">
-            Ada cerita yang baru dipahami setelah ia selesai. Ini salah satunya.
-            Pada 8 Juli 2026, Farhan dan Erina akan menjawab semua awal yang
-            pernah terjadi di desa itu — dan mereka ingin kamu ada di sana
-            bersama mereka.
-          </p>
-          <div class="ch2-divider"></div>
-        </section>
+        </div>
 
         <!-- Portrait — couple photo -->
 
